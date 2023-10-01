@@ -1,0 +1,12 @@
+[submodule "blizzard"]
+	path = blizzard
+	url = https://github.com/ArcticOJ/blizzard
+[submodule "avalanche"]
+	path = avalanche
+	url = https://github.com/ArcticOJ/avalanche
+[submodule "wrapper"]
+	path = wrapper
+	url = https://github.com/ArcticOJ/wrapper
+[submodule "go-rejson"]
+    path = go-rejson
+	url = https://github.com/AlphaNecron/go-rejson

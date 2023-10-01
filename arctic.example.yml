@@ -1,0 +1,40 @@
+host: 0.0.0.0 # host Arctic should run on
+privateKey: d057ab405abcee847b3c0ee6e8324cfbdb693803 # private key used to encrypt Blizzard sessions
+port: 2999 # port Arctic should run on
+enableCors: true # whether to enable CORS
+rateLimit: 100 # limit to x requests per 30 seconds
+
+oauth:
+  github:
+    clientId: null
+    clientSecret: null
+  discord:
+    clientId: null
+    clientSecret: null
+
+storage:
+  problems: /path/to/problems
+  posts: /path/to/posts
+  submissions: /path/to/submissions
+  readmes: /path/to/readmes
+
+redis:
+  host: 192.168.31.240
+  port: 6379
+
+rabbitmq:
+  username: guest
+  password: guest
+  host: localhost
+  port: 5672
+  streamPort: 5552
+  managerPort: 15672
+  vhost: arctic
+
+database:
+  secure: false # whether to use tls for connection to db
+  host: localhost
+  port: 5432
+  username: postgres
+  password: postgres
+  name: arctic
