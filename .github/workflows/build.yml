@@ -28,7 +28,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            alphanecron/blizzard
+            alphanecron/arctic
           tags: |
             type=schedule
             type=ref,event=branch
