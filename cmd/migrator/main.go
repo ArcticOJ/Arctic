@@ -39,10 +39,10 @@ func _migrate() *cobra.Command {
 				return err
 			}
 			if group.IsZero() {
-				logger.Logger.Info().Msg("there are no new migrations to run, database is up to date.")
+				logger.Global.Info().Msg("there are no new migrations to run, database is up to date.")
 				return nil
 			}
-			logger.Logger.Info().Msgf("migrated to %s", group)
+			logger.Global.Info().Msgf("migrated to %s", group)
 			return nil
 		},
 	}
@@ -62,10 +62,10 @@ func rollback() *cobra.Command {
 				return err
 			}
 			if group.IsZero() {
-				logger.Logger.Info().Msg("there are no groups to roll back")
+				logger.Global.Info().Msg("there are no groups to roll back")
 				return nil
 			}
-			logger.Logger.Info().Msgf("rolled back %s", group)
+			logger.Global.Info().Msgf("rolled back %s", group)
 			return nil
 		},
 	}
@@ -101,7 +101,7 @@ func createGo() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			logger.Logger.Info().Msgf("created migration %s (%s)", mf.Name, mf.Path)
+			logger.Global.Info().Msgf("created migration %s (%s)", mf.Name, mf.Path)
 			return nil
 		},
 	}
@@ -118,7 +118,7 @@ func createSQL() *cobra.Command {
 				return err
 			}
 			for _, mf := range files {
-				logger.Logger.Info().Msgf("created migration %s (%s)", mf.Name, mf.Path)
+				logger.Global.Info().Msgf("created migration %s (%s)", mf.Name, mf.Path)
 			}
 			return nil
 		},
@@ -133,7 +133,7 @@ func status() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			logger.Logger.Info().Msgf(
+			logger.Global.Info().Msgf(
 				"migrations: %s\n"+
 					"unapplied migrations: %s\n"+
 					"last migration group: %s", ms, ms.Unapplied(), ms.LastGroup())
@@ -152,10 +152,10 @@ func markApplied() *cobra.Command {
 				return err
 			}
 			if group.IsZero() {
-				logger.Logger.Info().Msg("there are no new migrations to mark as applied")
+				logger.Global.Info().Msg("there are no new migrations to mark as applied")
 				return nil
 			}
-			logger.Logger.Info().Msgf("marked as applied %s", group)
+			logger.Global.Info().Msgf("marked as applied %s", group)
 			return nil
 		},
 	}

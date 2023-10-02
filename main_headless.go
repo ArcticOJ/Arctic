@@ -5,9 +5,9 @@ package main
 import (
 	"blizzard"
 	"blizzard/config"
-	"blizzard/models"
+	"blizzard/server"
 	blizzardhttp "blizzard/server/http"
-	"blizzard/server/http/middlewares"
+	"blizzard/server/middlewares"
 	"blizzard/validator"
 	"errors"
 	"github.com/labstack/echo/v4"
@@ -29,7 +29,7 @@ func init() {
 			code = er.Code
 			message = er.Message.(string)
 		}
-		err = c.JSON(code, models.Error{Code: code, Message: message})
+		err = c.JSON(code, blizzardhttp.Error{Code: code, Message: message})
 		if err != nil {
 			Router.Logger.Error(err)
 		}
@@ -41,5 +41,5 @@ func init() {
 	if config.Config.RateLimit > 0 {
 		Router.Use(middlewares.RateLimit())
 	}
-	blizzardhttp.Register(Router)
+	server.Register(Router)
 }

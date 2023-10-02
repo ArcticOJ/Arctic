@@ -5,7 +5,7 @@ tmp_dir = "/tmp"
 [build]
   args_bin = []
   bin = "/tmp/blizzard"
-  cmd = "go build -tags ui,headless -o /tmp/blizzard ."
+  cmd = "go build -tags ui,headless,orca -o /tmp/blizzard ."
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata", "avalanche"]
   exclude_file = []
