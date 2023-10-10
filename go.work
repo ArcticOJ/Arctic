@@ -4,6 +4,5 @@ use (
 	.
 	blizzard
 	wrapper
-	go-rejson
 	orca
 )

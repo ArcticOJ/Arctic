@@ -3,16 +3,15 @@
 package main
 
 import (
-	"blizzard/config"
-	"blizzard/logger"
 	"context"
 	"fmt"
+	"github.com/ArcticOJ/blizzard/v0/config"
+	"github.com/ArcticOJ/blizzard/v0/logger"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"net"
 	"os"
 	"os/signal"
-	"strings"
 	"syscall"
 )
 
@@ -40,23 +39,6 @@ func main() {
 		DisableStackAll:   true,
 	}
 	if config.Config.Debug {
-		Router.Use(middleware.BodyDump(func(c echo.Context, req, res []byte) {
-			if strings.HasPrefix(c.Request().URL.Path, "/api") {
-				logger.Global.Debug().Str("url", c.Request().RequestURI).Bytes("req", req).Bytes("res", res).Msg("body")
-			}
-		}))
-		Router.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
-			LogURI:    true,
-			LogStatus: true,
-			LogValuesFunc: func(c echo.Context, v middleware.RequestLoggerValues) error {
-				logger.Global.Debug().
-					Str("url", v.URI).
-					Int("status", v.Status).
-					Dur("latency", v.Latency).
-					Msg("req")
-				return nil
-			},
-		}))
 		rConf = middleware.RecoverConfig{
 			DisableStackAll: true,
 			LogErrorFunc: func(c echo.Context, err error, stack []byte) error {
@@ -70,6 +52,6 @@ func main() {
 	Router.HideBanner = true
 	Router.HidePort = true
 	addr := net.JoinHostPort(config.Config.Host, fmt.Sprint(config.Config.Port))
-	logger.Global.Info().Msgf("starting server on %s", addr)
-	logger.Global.Fatal().Err(Router.Start(addr)).Send()
+	logger.Global.Info().Msgf("server listening on %s", addr)
+	logger.Panic(Router.Start(addr), "failed to listen on %s", addr)
 }

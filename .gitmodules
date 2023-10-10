@@ -7,9 +7,6 @@
 [submodule "wrapper"]
 	path = wrapper
 	url = https://github.com/ArcticOJ/wrapper
-[submodule "go-rejson"]
-    path = go-rejson
-	url = https://github.com/AlphaNecron/go-rejson
 [submodule "orca"]
 	path = orca
 	url = https://github.com/ArcticOJ/orca

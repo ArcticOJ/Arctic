@@ -1,11 +1,11 @@
 package main
 
 import (
-	"blizzard/config"
-	"blizzard/db"
-	"blizzard/db/seed"
-	"blizzard/logger"
-	"blizzard/migrations"
+	"github.com/ArcticOJ/blizzard/v0/config"
+	"github.com/ArcticOJ/blizzard/v0/db"
+	"github.com/ArcticOJ/blizzard/v0/db/seed"
+	"github.com/ArcticOJ/blizzard/v0/logger"
+	"github.com/ArcticOJ/blizzard/v0/migrations"
 	"github.com/spf13/cobra"
 	"github.com/uptrace/bun/dbfixture"
 	"github.com/uptrace/bun/migrate"
@@ -166,6 +166,12 @@ func reset() *cobra.Command {
 		Use:   "reset",
 		Short: "recreate all tables and seed with example data",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if e := seed.DropAll(db.Database, cmd.Context()); e != nil {
+				return e
+			}
+			if e := seed.CreateAll(db.Database, cmd.Context()); e != nil {
+				return e
+			}
 			if e := migrator.Reset(cmd.Context()); e != nil {
 				return e
 			}
@@ -173,12 +179,6 @@ func reset() *cobra.Command {
 				return e
 			}
 			fixture := dbfixture.New(migrator.DB())
-			if e := seed.DropAll(db.Database, cmd.Context()); e != nil {
-				return e
-			}
-			if e := seed.CreateAll(db.Database, cmd.Context()); e != nil {
-				return e
-			}
 			return fixture.Load(cmd.Context(), os.DirFS("cmd/migrator"), "fixture.yml")
 		},
 	}

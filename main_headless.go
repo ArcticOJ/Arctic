@@ -3,13 +3,12 @@
 package main
 
 import (
-	"blizzard"
-	"blizzard/config"
-	"blizzard/server"
-	blizzardhttp "blizzard/server/http"
-	"blizzard/server/middlewares"
-	"blizzard/validator"
 	"errors"
+	"github.com/ArcticOJ/blizzard/v0"
+	"github.com/ArcticOJ/blizzard/v0/config"
+	"github.com/ArcticOJ/blizzard/v0/server"
+	blizzardhttp "github.com/ArcticOJ/blizzard/v0/server/http"
+	"github.com/ArcticOJ/blizzard/v0/validator"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"net/http"
@@ -37,9 +36,6 @@ func init() {
 	Router.Validator = validator.New()
 	if config.Config.EnableCORS {
 		Router.Use(middleware.CORS())
-	}
-	if config.Config.RateLimit > 0 {
-		Router.Use(middlewares.RateLimit())
 	}
 	server.Register(Router)
 }

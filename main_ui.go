@@ -3,10 +3,10 @@
 package main
 
 import (
-	"blizzard/logger"
 	"embed"
+	"github.com/ArcticOJ/blizzard/v0/logger"
+	"github.com/ArcticOJ/wrapper/v0"
 	"io/fs"
-	"wrapper"
 )
 
 //go:embed all:avalanche/out/*

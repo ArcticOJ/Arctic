@@ -1,8 +1,9 @@
-module arctic
+module github.com/ArcticOJ/ArcticOJ/v0
 
 go 1.21
 
 require (
+	aidanwoods.dev/go-paseto v1.5.0
 	github.com/labstack/echo/v4 v4.11.1
 	github.com/spf13/cobra v1.7.0
 	github.com/uptrace/bun v1.1.16
@@ -10,6 +11,7 @@ require (
 )
 
 require (
+	aidanwoods.dev/go-result v0.1.0 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect

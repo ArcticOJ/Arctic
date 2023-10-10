@@ -1,14 +1,14 @@
 package main
 
 import (
-	"blizzard/config"
-	"blizzard/core"
-	"blizzard/db"
-	"blizzard/db/models/user"
-	"blizzard/logger/debug"
-	"blizzard/permission"
 	"context"
 	"fmt"
+	"github.com/ArcticOJ/blizzard/v0/config"
+	"github.com/ArcticOJ/blizzard/v0/core"
+	"github.com/ArcticOJ/blizzard/v0/db"
+	"github.com/ArcticOJ/blizzard/v0/db/models/user"
+	"github.com/ArcticOJ/blizzard/v0/logger/debug"
+	"github.com/ArcticOJ/blizzard/v0/permission"
 	"github.com/spf13/cobra"
 	"github.com/uptrace/bun"
 	"strconv"

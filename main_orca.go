@@ -2,7 +2,7 @@
 
 package main
 
-import "orca"
+import "github.com/ArcticOJ/orca/v0"
 
 func init() {
 	OnInit = append(OnInit, orca.Init)
