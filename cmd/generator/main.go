@@ -7,12 +7,11 @@ import (
 )
 
 func main() {
-	root := &cobra.Command{
+	(&cobra.Command{
 		Use:   "generator",
 		Short: "generate a blizzard key",
 		Run: func(cmd *cobra.Command, args []string) {
 			fmt.Println(paseto.NewV4SymmetricKey().ExportHex())
 		},
-	}
-	_ = root.Execute()
+	}).Execute()
 }

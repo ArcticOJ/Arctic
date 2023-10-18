@@ -4,7 +4,6 @@ package main
 
 import (
 	"embed"
-	"github.com/ArcticOJ/blizzard/v0/logger"
 	"github.com/ArcticOJ/wrapper/v0"
 	"io/fs"
 )
@@ -14,6 +13,8 @@ var AvalancheBundle embed.FS
 
 func init() {
 	sub, e := fs.Sub(AvalancheBundle, "avalanche/out")
-	logger.Panic(e, "failed to open embedded avalanche bundle")
+	if e != nil {
+		panic(e)
+	}
 	wrapper.Register(Router, sub)
 }
