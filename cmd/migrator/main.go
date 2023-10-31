@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/ArcticOJ/blizzard/v0/config"
 	"github.com/ArcticOJ/blizzard/v0/db"
 	"github.com/ArcticOJ/blizzard/v0/db/seed"
 	"github.com/ArcticOJ/blizzard/v0/logger"
@@ -198,7 +197,6 @@ var cmds = []*cobra.Command{
 }
 
 func main() {
-	config.Config.Debug = true
 	migrator = migrate.NewMigrator(db.Database, migrations.Migrations)
 	root := cobra.Command{
 		Use:   "migrator",

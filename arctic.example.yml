@@ -1,5 +1,6 @@
 host: 0.0.0.0 # host Arctic should run on
-privateKey: d057ab405abcee847b3c0ee6e8324cfbdb693803 # private key used to encrypt Blizzard sessions
+brand: Arctic # brand to display on webui
+privateKey: <generate_me> # private key used to encrypt Blizzard sessions, generate one using cmd/generator
 port: 2999 # port Arctic should run on
 enableCors: true # whether to enable CORS
 rateLimit: 100 # limit to x requests per 30 seconds
@@ -19,7 +20,7 @@ storage:
   readmes: /path/to/readmes
 
 redis:
-  host: 192.168.31.240
+  host: localhost
   port: 6379
 
 rabbitmq:
@@ -27,8 +28,8 @@ rabbitmq:
   password: guest
   host: localhost
   port: 5672
-  streamPort: 5552
-  managerPort: 15672
+  streamPort: 5552 # port of rabbitmq's stream plugin
+  managerPort: 15672 # port of rabbitmq's management plugin
   vhost: arctic
 
 database:

@@ -5,7 +5,7 @@ tmp_dir = "/tmp"
 [build]
   args_bin = []
   bin = "/tmp/arctic"
-  cmd = "go build -tags ui,headless,orca -o /tmp/arctic ."
+  cmd = "make dev OUT=/tmp/arctic"
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "blizzard/vendor", "testdata", "avalanche"]
   exclude_file = []
@@ -15,7 +15,7 @@ tmp_dir = "/tmp"
   full_bin = ""
   include_dir = []
   include_ext = ["go", "tpl", "tmpl", "html"]
-  include_file = ["arctic.yml", ".air.toml"]
+  include_file = ["arctic.yml", ".air.toml", "Makefile"]
   kill_delay = "0s"
   log = "arctic.build-errors.log"
   send_interrupt = true
