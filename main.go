@@ -42,7 +42,7 @@ func main() {
 		rConf = middleware.RecoverConfig{
 			DisableStackAll: true,
 			LogErrorFunc: func(c echo.Context, err error, stack []byte) error {
-				logger.Global.Err(err).Str("url", c.Request().URL.RequestURI()).Send()
+				logger.Global.Err(err).Str("url", c.Request().URL.RequestURI()).Msg("got panic")
 				fmt.Println(string(stack))
 				return nil
 			},

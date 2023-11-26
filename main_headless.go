@@ -34,7 +34,7 @@ func init() {
 		}
 	}
 	Router.Validator = validator.New()
-	if config.Config.EnableCORS {
+	if config.Config.Blizzard.EnableCORS {
 		Router.Use(middleware.CORS())
 	}
 	server.Register(Router)

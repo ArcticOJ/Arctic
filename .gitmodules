@@ -10,3 +10,6 @@
 [submodule "orca"]
 	path = orca
 	url = https://github.com/ArcticOJ/orca
+[submodule "polar"]
+    path = polar
+    url = https://github.com/ArcticOJ/polar

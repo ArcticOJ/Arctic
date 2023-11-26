@@ -4,5 +4,6 @@ use (
 	.
 	blizzard
 	orca
+	polar
 	wrapper
 )
