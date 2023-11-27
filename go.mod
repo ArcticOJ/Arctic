@@ -3,7 +3,7 @@ module github.com/ArcticOJ/ArcticOJ/v0
 go 1.21
 
 require (
-	aidanwoods.dev/go-paseto v1.5.0
+	aidanwoods.dev/go-paseto v1.5.1
 	github.com/labstack/echo/v4 v4.11.3
 	github.com/spf13/cobra v1.7.0
 	github.com/uptrace/bun v1.1.16
