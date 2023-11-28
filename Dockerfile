@@ -16,7 +16,7 @@ COPY --from=avalanche-builder /usr/src/avalanche/out avalanche/out
 
 RUN go mod download
 
-RUN go build -o ./out/arctic -tags ui,headless -ldflags "-s -w" .
+RUN make release OUT=./out/arctic
 
 FROM alpine
 WORKDIR /arctic
