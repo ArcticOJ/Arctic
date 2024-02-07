@@ -13,5 +13,5 @@ release: main.go main_headless.go main_nothing.go main_orca.go main_nothing.go
 	go build ${REL_FLAGS} -tags ui,headless,orca -o ${OUT}
 
 dev: main.go main_headless.go main_nothing.go main_orca.go main_nothing.go
-	go build ${DEV_FLAGS} -tags ui,headless,orca -o ${OUT}
+	go build ${DEV_FLAGS} -tags headless,orca -o ${OUT}
 

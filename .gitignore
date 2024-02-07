@@ -3,3 +3,4 @@ tmp/
 **/._*
 arctic.yml
 cmd/migrator/fixture.yml
+.air.remote.toml

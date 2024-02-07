@@ -6,7 +6,7 @@ import (
 	"github.com/ArcticOJ/blizzard/v0/config"
 	"github.com/ArcticOJ/blizzard/v0/core"
 	"github.com/ArcticOJ/blizzard/v0/db"
-	"github.com/ArcticOJ/blizzard/v0/db/models/user"
+	"github.com/ArcticOJ/blizzard/v0/db/schema/user"
 	"github.com/ArcticOJ/blizzard/v0/logger/debug"
 	"github.com/ArcticOJ/blizzard/v0/permission"
 	"github.com/spf13/cobra"
@@ -34,7 +34,7 @@ func createUser() *cobra.Command {
 				Password: string(r),
 			}
 
-			var roleId int = -1
+			var roleId = -1
 
 			if role, e := cmd.Flags().GetInt("role"); e == nil && role != -1 {
 				roleId = role
@@ -51,7 +51,7 @@ func createUser() *cobra.Command {
 					return err
 				}
 				if roleId >= 0 {
-					_, err = tx.NewInsert().Model(&user.UserToRole{
+					_, err = tx.NewInsert().Model(&user.RoleMembership{
 						RoleID: uint16(roleId),
 						UserID: u.ID,
 					}).Exec(ctx)

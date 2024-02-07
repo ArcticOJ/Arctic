@@ -1,4 +1,4 @@
-FROM node:18-alpine AS avalanche-builder
+FROM --platform=${BUILDPLATFORM} node:20-alpine AS avalanche-builder
 WORKDIR /usr/src/avalanche
 
 COPY avalanche .
@@ -7,7 +7,7 @@ RUN yarn install --frozen-lockfile --immutable
 
 RUN yarn build
 
-FROM golang:alpine AS arctic-builder
+FROM --platform=${BUILDPLATFORM} golang:alpine AS arctic-builder
 WORKDIR /usr/src/app
 
 COPY . .
@@ -18,7 +18,7 @@ RUN go mod download
 
 RUN make release OUT=./out/arctic
 
-FROM alpine
+FROM --platform=${BUILDPLATFORM} alpine as arctic
 WORKDIR /arctic
 
 COPY --from=arctic-builder /usr/src/app/out/arctic ./
