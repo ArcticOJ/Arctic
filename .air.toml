@@ -1,11 +1,11 @@
 root = "."
 testdata_dir = "testdata"
-tmp_dir = "/tmp"
+tmp_dir = "/tmp/arctic"
 
 [build]
   args_bin = []
-  bin = "/tmp/arctic"
-  cmd = "make dev OUT=/tmp/arctic"
+  bin = "/tmp/arctic/arctic"
+  cmd = "make gen_routes OUT=/tmp/arctic/gen_routes && make dev OUT=/tmp/arctic/arctic"
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "blizzard/vendor", "testdata", "avalanche"]
   exclude_file = []
