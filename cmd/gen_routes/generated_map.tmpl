@@ -7,15 +7,19 @@ import (
 {{- end}}
 )
 
-var Map = []http.Route{
-{{- range .Manifests}}
-    {
-        Path: "{{ .Path }}",
-        Handler: {{ .Handler }},
-        Method: http.{{ .Method }},
+var Map = map[string][]http.Route{
+{{- range $key, $value := .Manifests }}
+    "{{ $key }}": []http.Route{
+{{- range $value }}
+        {
+            Path:    "{{ .Path }}",
+            Handler: {{ .Handler }},
+            Method:  http.{{ .Method }},
         {{- if .Flags}}
-        Flags: {{ .Flags }},
+            Flags: {{ .Flags }},
         {{- end}}
+        },
+        {{- end }}
     },
 {{- end}}
 }

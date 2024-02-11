@@ -12,6 +12,7 @@ REL_FLAGS = -ldflags "-X '${PKG}/build.Version=${VERSION}' -X '${PKG}/build.Hash
 gen_routes:
 	test -s ${OUT} || go build -o ${OUT} ./cmd/gen_routes
 	${OUT} ./blizzard/routes ${PKG} ./blizzard/routes/map_generated.go
+	gofmt -w ./blizzard/routes/map_generated.go
 
 
 release: main.go main_headless.go main_nothing.go main_orca.go main_nothing.go

@@ -25,7 +25,7 @@ type (
 	TemplateData struct {
 		Args      string
 		Imports   []string
-		Manifests []RouteManifest
+		Manifests map[string][]RouteManifest
 	}
 	RouteManifest struct {
 		Method  string
@@ -44,7 +44,6 @@ func parseManifest(pkg, raw string) (RouteManifest, error) {
 	m.Handler, m.Method, m.Path = fields[0], fields[1], fields[2]
 	if pkg != "" {
 		m.Handler = pkg + "." + m.Handler
-		m.Path = "/" + pkg + m.Path
 	}
 	m.Path = strings.TrimRight(m.Path, "/")
 	var flags []string
@@ -68,6 +67,7 @@ func main() {
 		Imports: []string{
 			pkgPath + "/server/http",
 		},
+		Manifests: make(map[string][]RouteManifest),
 	}
 	build := func(dir string) {
 		// use a scoped manifests for easier sorting
@@ -78,7 +78,7 @@ func main() {
 			return !(strings.HasPrefix(info.Name(), "._") || strings.HasSuffix(info.Name(), "generated.go"))
 		}, parser.ParseComments)
 		logger.Panic(e, "error reading '%s'", _path)
-		if len(pkgs) > 0 && dir != "" {
+		if len(pkgs) > 0 && dir != "/" {
 			dat.Imports = append(dat.Imports, fmt.Sprintf("%s/routes/%s", pkgPath, dir))
 		}
 		for pkg, content := range pkgs {
@@ -89,7 +89,7 @@ func main() {
 							continue
 						}
 						// nullify pkg for apex routes
-						if dir == "" {
+						if dir == "/" {
 							pkg = ""
 						}
 						manifest, e := parseManifest(pkg, fn.Doc.List[0].Text)
@@ -107,9 +107,9 @@ func main() {
 			}
 			return 0
 		})
-		dat.Manifests = append(dat.Manifests, manifests...)
+		dat.Manifests[dir] = manifests
 	}
-	build("")
+	build("/")
 	dirs, e := os.ReadDir(basePath)
 	logger.Panic(e, "failed to read routes dir")
 	for _, dir := range dirs {
@@ -118,6 +118,7 @@ func main() {
 		}
 	}
 	slices.Sort(dat.Imports)
+	fmt.Println(dat.Manifests)
 	f, e := os.OpenFile(outFile, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0755)
 	logger.Panic(e, "error opening output file '%s'", outFile)
 	logger.Panic(Template.Execute(f, dat), "error generating output file")
