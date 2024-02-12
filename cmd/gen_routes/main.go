@@ -73,7 +73,6 @@ func main() {
 		Manifests: make(map[string][]RouteManifest),
 	}
 	build := func(dir string) {
-		// use a scoped manifests for easier sorting
 		var manifests []RouteManifest
 		fset := token.NewFileSet()
 		_path := path.Join(basePath, dir)
