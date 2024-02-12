@@ -46,7 +46,9 @@ func parseManifest(pkg, raw string) (RouteManifest, error) {
 	if pkg != "" {
 		m.Handler = pkg + "." + m.Handler
 	}
-	m.Path = strings.TrimRight(m.Path, "/")
+	if len(m.Path) > 1 {
+		m.Path = strings.TrimSuffix(m.Path, "/")
+	}
 	var flags []string
 	for i := 3; i < len(fields); i++ {
 		// no need to use strings.HasPrefix lol

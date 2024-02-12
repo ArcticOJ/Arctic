@@ -10,7 +10,7 @@ import (
 var Map = map[string][]http.Route{
 {{- range $key, $value := .Manifests }}
     "{{ $key }}": []http.Route{
-{{- range $value }}
+    {{- range $value }}
         {
             Path:    "{{ .Path }}",
             Handler: {{ .Handler }},
@@ -19,7 +19,7 @@ var Map = map[string][]http.Route{
             Flags: {{ .Flags }},
         {{- end}}
         },
-        {{- end }}
+    {{- end }}
     },
 {{- end}}
 }
