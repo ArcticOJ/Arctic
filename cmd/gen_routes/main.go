@@ -13,6 +13,7 @@ import (
 	"slices"
 	"strings"
 	"text/template"
+	"time"
 )
 
 var (
@@ -24,6 +25,7 @@ var Template = template.Must(template.New("generated_map.tmpl").ParseFiles("cmd/
 type (
 	TemplateData struct {
 		Args      string
+		Now       time.Time
 		Imports   []string
 		Manifests map[string][]RouteManifest
 	}
@@ -42,10 +44,7 @@ func parseManifest(pkg, raw string) (RouteManifest, error) {
 	if len(fields) < 3 {
 		return m, ErrMalformedManifest
 	}
-	m.Handler, m.Method, m.Path = fields[0], fields[1], fields[2]
-	if pkg != "" {
-		m.Handler = pkg + "." + m.Handler
-	}
+	m.Handler, m.Method, m.Path = pkg+"."+fields[0], fields[1], fields[2]
 	if len(m.Path) > 1 {
 		m.Path = strings.TrimSuffix(m.Path, "/")
 	}
@@ -67,6 +66,7 @@ func main() {
 	basePath, pkgPath, outFile := os.Args[1], os.Args[2], os.Args[3]
 	dat := TemplateData{
 		Args: strings.Join(os.Args, " "),
+		Now:  time.Now(),
 		Imports: []string{
 			pkgPath + "/server/http",
 		},
@@ -80,8 +80,12 @@ func main() {
 			return !(strings.HasPrefix(info.Name(), "._") || strings.HasSuffix(info.Name(), "generated.go"))
 		}, parser.ParseComments)
 		logger.Panic(e, "error reading '%s'", _path)
-		if len(pkgs) > 0 && dir != "" {
-			dat.Imports = append(dat.Imports, fmt.Sprintf("%s/routes/%s", pkgPath, dir))
+		if len(pkgs) > 0 {
+			p := fmt.Sprintf("%s/routes/%s", pkgPath, dir)
+			if dir == "" {
+				p = fmt.Sprintf("%s/routes", pkgPath)
+			}
+			dat.Imports = append(dat.Imports, p)
 		}
 		for pkg, content := range pkgs {
 			for _p, x := range content.Files {
@@ -89,10 +93,6 @@ func main() {
 					if fn, ok := decl.(*ast.FuncDecl); ok {
 						if fn.Doc == nil || len(fn.Doc.List) == 0 {
 							continue
-						}
-						// nullify pkg for apex routes
-						if dir == "" {
-							pkg = ""
 						}
 						manifest, e := parseManifest(pkg, fn.Doc.List[0].Text)
 						logger.Panic(e, "error parsing '%s'", _p)

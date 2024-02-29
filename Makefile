@@ -9,11 +9,10 @@ DEV_FLAGS = -ldflags "-X '${PKG}/build.Hash=${HASH}' -X '${PKG}/build._date=${DA
 REL_FLAGS = -ldflags "-X '${PKG}/build.Version=${VERSION}' -X '${PKG}/build.Hash=${HASH}' -X '${PKG}/build._date=${DATE}' -s -w"
 
 # TODO: test before releasing
-gen_routes:
+gen_routes: cmd/gen_routes/main.go cmd/gen_routes/generated_map.tmpl blizzard/server/server.go
 	test -s ${OUT} || go build -o ${OUT} ./cmd/gen_routes
-	${OUT} ./blizzard/routes ${PKG} ./blizzard/routes/map_generated.go
-	gofmt -w ./blizzard/routes/map_generated.go
-
+	${OUT} ./blizzard/routes ${PKG} ./blizzard/server/map_generated.go
+	gofmt -w ./blizzard/server/map_generated.go
 
 release: main.go main_headless.go main_nothing.go main_orca.go main_nothing.go
 	go build ${REL_FLAGS} -tags ui,headless,orca -o ${OUT}
