@@ -167,8 +167,8 @@ var reset = &cobra.Command{
 }
 
 var migratorCmd = &cobra.Command{
-	Use:   "migrator",
-	Short: "blizzard migration helper",
+	Use:   "migrate",
+	Short: "database migration helper",
 }
 
 func init() {

@@ -112,8 +112,8 @@ func createRole() *cobra.Command {
 }
 
 var managerCmd = &cobra.Command{
-	Use:   "manager",
-	Short: "blizzard database manager",
+	Use:   "manage",
+	Short: "manage database-related stuff",
 }
 
 func init() {

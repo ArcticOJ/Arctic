@@ -9,8 +9,8 @@ import (
 )
 
 var generatorCmd = &cobra.Command{
-	Use:   "generator",
-	Short: "generate a blizzard key",
+	Use:   "generate",
+	Short: "generate a secret key for client sessions",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println(paseto.NewV4SymmetricKey().ExportHex())
 	},
