@@ -1,6 +1,7 @@
 package main
 
 import (
+	"cmp"
 	"errors"
 	"fmt"
 	"github.com/ArcticOJ/blizzard/v0/logger"
@@ -38,7 +39,7 @@ type (
 )
 
 func parseManifest(pkg, raw string) (RouteManifest, error) {
-	// trim comments' prefix before processing
+	// Trim comments' prefix before processing
 	fields := strings.Fields(strings.TrimSpace(strings.TrimLeft(raw, "/")))
 	m := RouteManifest{}
 	if len(fields) < 3 {
@@ -101,13 +102,11 @@ func main() {
 				}
 			}
 		}
-		slices.SortStableFunc(manifests, func(a, b RouteManifest) int {
-			if a.Path > b.Path {
-				return 1
-			} else if a.Path < b.Path {
-				return -1
+		slices.SortFunc(manifests, func(a, b RouteManifest) int {
+			if r := cmp.Compare(a.Path, b.Path); r != 0 {
+				return r
 			}
-			return 0
+			return cmp.Compare(a.Handler, b.Handler)
 		})
 		dat.Manifests["/"+dir] = manifests
 	}

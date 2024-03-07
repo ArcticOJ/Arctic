@@ -12,6 +12,8 @@ require (
 
 require (
 	aidanwoods.dev/go-result v0.1.0 // indirect
+	github.com/GeertJohan/go.rice v1.0.3 // indirect
+	github.com/daaku/go.zipexe v1.0.2 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect

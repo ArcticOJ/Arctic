@@ -1,9 +1,10 @@
+//go:build headless
+
 package main
 
 import (
 	"context"
 	"fmt"
-	"github.com/ArcticOJ/blizzard/v0/config"
 	"github.com/ArcticOJ/blizzard/v0/core"
 	"github.com/ArcticOJ/blizzard/v0/db"
 	"github.com/ArcticOJ/blizzard/v0/db/schema/user"
@@ -42,9 +43,9 @@ func createUser() *cobra.Command {
 			if name, e := cmd.Flags().GetString("name"); e == nil && name != "" {
 				u.DisplayName = name
 			}
-			if org, e := cmd.Flags().GetString("org"); e == nil && org != "" {
-				u.Organization = org
-			}
+			//if org, e := cmd.Flags().GetString("org"); e == nil && org != "" {
+			//	u.Organizations = org
+			//}
 			if e := db.Database.RunInTx(cmd.Context(), nil, func(ctx context.Context, tx bun.Tx) error {
 				_, err := tx.NewInsert().Model(u).Returning("id").Exec(ctx)
 				if err != nil {
@@ -67,7 +68,7 @@ func createUser() *cobra.Command {
 		},
 	}
 	c.Flags().String("name", "", "display name for created user")
-	c.Flags().String("org", "", "affiliated organization of user")
+	//c.Flags().String("org", "", "user's affiliated organization")
 	c.Flags().Int("role", -1, "role to assign")
 	return c
 }
@@ -110,17 +111,14 @@ func createRole() *cobra.Command {
 	return c
 }
 
-var cmds = []*cobra.Command{
-	createUser(),
-	createRole(),
+var managerCmd = &cobra.Command{
+	Use:   "manager",
+	Short: "blizzard database manager",
 }
 
-func main() {
-	config.Config.Debug = true
-	root := &cobra.Command{
-		Use:   "manager",
-		Short: "blizzard database manager",
-	}
-	root.AddCommand(cmds...)
-	_ = root.Execute()
+func init() {
+	managerCmd.AddCommand(
+		createUser(),
+		createRole(),
+	)
 }

@@ -1,3 +1,5 @@
+//go:build headless
+
 package main
 
 import (
@@ -160,33 +162,31 @@ var reset = &cobra.Command{
 			return e
 		}
 		fixture := dbfixture.New(migrator.DB())
-		return fixture.Load(cmd.Context(), os.DirFS("cmd/migrator"), "fixture.yml")
+		return fixture.Load(cmd.Context(), os.DirFS("."), "fixture.yml")
 	},
 }
 
-var cmds = []*cobra.Command{
-	_init,
-	_migrate,
-	rollback,
-	lock,
-	unlock,
-	createGo,
-	createSQL,
-	status,
-	markApplied,
-	reset,
+var migratorCmd = &cobra.Command{
+	Use:   "migrator",
+	Short: "blizzard migration helper",
 }
 
-func main() {
+func init() {
 	migrator = migrate.NewMigrator(
 		db.Database,
 		migrations.Migrations,
 		migrate.WithTableName("arctic_migrations"),
 		migrate.WithLocksTableName("arctic_migration_locks"))
-	root := cobra.Command{
-		Use:   "migrator",
-		Short: "blizzard migration helper",
-	}
-	root.AddCommand(cmds...)
-	_ = root.Execute()
+	managerCmd.AddCommand(
+		_init,
+		_migrate,
+		rollback,
+		lock,
+		unlock,
+		createGo,
+		createSQL,
+		status,
+		markApplied,
+		reset,
+	)
 }

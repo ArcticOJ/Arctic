@@ -3,18 +3,20 @@
 package main
 
 import (
-	"embed"
 	"github.com/ArcticOJ/wrapper/v0"
-	"io/fs"
+	rice "github.com/GeertJohan/go.rice"
+	"os"
 )
 
-//go:embed all:avalanche/out/*
-var AvalancheBundle embed.FS
+const DefaultAvalancheOut = "avalanche/out"
 
 func init() {
-	sub, e := fs.Sub(AvalancheBundle, "avalanche/out")
-	if e != nil {
-		panic(e)
-	}
-	wrapper.Register(Router, sub)
+	PostInit = append(PostInit, func() {
+		out := os.Getenv("AVALANCHE_OUT")
+		if out == "" {
+			out = DefaultAvalancheOut
+		}
+		box := rice.MustFindBox(out)
+		wrapper.Register(Router, box)
+	})
 }

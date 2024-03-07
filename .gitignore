@@ -2,5 +2,5 @@ tmp/
 .idea/
 **/._*
 arctic.yml
-cmd/migrator/fixture.yml
+fixture.yml
 .air.remote.toml
