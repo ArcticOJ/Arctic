@@ -166,7 +166,7 @@ var reset = &cobra.Command{
 	},
 }
 
-var migratorCmd = &cobra.Command{
+var migrateCmd = &cobra.Command{
 	Use:   "migrate",
 	Short: "database migration helper",
 }
@@ -177,7 +177,7 @@ func init() {
 		migrations.Migrations,
 		migrate.WithTableName("arctic_migrations"),
 		migrate.WithLocksTableName("arctic_migration_locks"))
-	managerCmd.AddCommand(
+	migrateCmd.AddCommand(
 		_init,
 		_migrate,
 		rollback,
