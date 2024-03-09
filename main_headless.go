@@ -26,7 +26,7 @@ func main() {
 		Version: build.Version,
 	}
 	root.SetVersionTemplate("{{.Name}} (version {{.Version}})")
-	root.AddCommand(generatorCmd, migrateCmd, managerCmd)
+	root.AddCommand(generateCmd, migrateCmd, manageCmd)
 	root.Execute()
 }
 

@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var generatorCmd = &cobra.Command{
+var generateCmd = &cobra.Command{
 	Use:   "generate",
 	Short: "generate a secret key for client sessions",
 	Run: func(cmd *cobra.Command, args []string) {

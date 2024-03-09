@@ -111,13 +111,13 @@ func createRole() *cobra.Command {
 	return c
 }
 
-var managerCmd = &cobra.Command{
+var manageCmd = &cobra.Command{
 	Use:   "manage",
 	Short: "manage database-related stuff",
 }
 
 func init() {
-	managerCmd.AddCommand(
+	manageCmd.AddCommand(
 		createUser(),
 		createRole(),
 	)
